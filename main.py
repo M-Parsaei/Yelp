@@ -1,10 +1,23 @@
 import pyodbc
-from databaseConnection import dbConnect,dbCloseConnection, DBError
+from databaseConnection import dbStartConnection,dbCloseConnection, DBError
+import authenticate
 
 def main():
     try:
         # connecting to the database
-        connection = dbConnect()
+        connection = dbStartConnection()
+
+        # making a cursor of db in order to executes queries
+        dbCursor = connection.cursor()
+
+        #Asking user for their user_id 
+        user_id = input("Please Enter your user_id in order to login: \n")
+        #checking if the user_id is valid to login
+        if not authenticate.login(user_id,dbCursor):
+            print("Not logged IN...")
+        else: 
+            print("Logged In...")
+
 
         dbCloseConnection(connection)
     except DBError as e:
