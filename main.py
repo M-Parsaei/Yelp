@@ -1,12 +1,14 @@
 import pyodbc
-from databaseConnection import dbConnect
+from databaseConnection import dbConnect,dbCloseConnection, DBError
 
 def main():
     try:
         # connecting to the database
         connection = dbConnect()
-    except:
-        print("Cound not connect to the database")
+
+        dbCloseConnection(connection)
+    except DBError as e:
+        print(f"Error: {e}")
 
 if (__name__ == '__main__'):
     main()
