@@ -1,10 +1,10 @@
 import pyodbc
+import queriesSkelton
 
-
-def searchBusiness(filter: dict, 
+def searchTable(filter: dict, tableName: str,
                    cursor: pyodbc.Cursor)-> list:
     """
-    returns the list of tuples in Business table which 
+    returns the list of tuples in a table which 
     matches the searching filter
 
     Returns:
@@ -14,20 +14,26 @@ def searchBusiness(filter: dict,
         filter (dict): The filtering dictionary, for example {"name":"KFC","star":5} 
         if wants to filter only business with KFC as their name and have 5 star rating
 
+        tableName (str): the name of the table which searchTable runs the query on
+
         cursor (pyodbc.Cursor): The pyodbc Cursor in order to execute a query
         to find all of the matching business from the table
     """
 
-    # the skelton of the query to find matching tuples
-    # from business table
-    query = (f"SELECT *"
-            "FROM business AS B "
-            "WHERE ")
+    
+    try:
+        # getting the skelton of the search query 
+        # for a table which its name was provided from tableName,
+        # from the skeletonLists dict
+        query = queriesSkelton.skeletonLists[tableName]
+    except:
+        # if there was no query for that table
+        # then return empty list 
+        print("Invalid table name")
+        return []
     
     # queryParams is a list of filtering values 
     queryParams = []
-
-
 
     index = 0
     for key,value in filter.items():
@@ -42,7 +48,7 @@ def searchBusiness(filter: dict,
         #if the value was string, then add its lowercase to list
         # in order to have a case-insenstive search
         queryParams.append(value.lower() if type(value)=="str" else value)
-        
+
         index += 1
 
     # finishs the query with ;
@@ -55,8 +61,10 @@ def searchBusiness(filter: dict,
 
 
 
-def searchUser():
-    pass
+def searchUser(filter: dict, 
+               cursor: pyodbc.Cursor)->list:
+   pass
+
 
 def addFriends():
     pass

@@ -18,11 +18,11 @@ def main():
         #else: 
         #    print("Logged In...")
 
-        contorllers.searchBusiness(filter={"name":"chrysler"},
-                                   cursor=dbCursor,
-                                   connection=connection)
+        result = contorllers.searchTable(filter={"name":"john"},
+                                   tableName="user_yelp",
+                                   cursor=dbCursor)
 
-
+        print(result)
         dbCloseConnection(connection)
     except DBError as e:
         print(f"Error: {e}")
