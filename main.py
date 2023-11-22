@@ -1,6 +1,6 @@
 import pyodbc
 from databaseConnection import dbStartConnection,dbCloseConnection, DBError
-import authenticate
+import authenticate,contorllers
 
 def main():
     try:
@@ -11,12 +11,16 @@ def main():
         dbCursor = connection.cursor()
 
         #Asking user for their user_id 
-        user_id = input("Please Enter your user_id in order to login: \n")
+        #user_id = input("Please Enter your user_id in order to login: \n")
         #checking if the user_id is valid to login
-        if not authenticate.login(user_id,dbCursor):
-            print("Not logged IN...")
-        else: 
-            print("Logged In...")
+        # if not authenticate.login(user_id,dbCursor):
+        #     print("Not logged IN...")
+        #else: 
+        #    print("Logged In...")
+
+        contorllers.searchBusiness(filter={"name":"chrysler"},
+                                   cursor=dbCursor,
+                                   connection=connection)
 
 
         dbCloseConnection(connection)
