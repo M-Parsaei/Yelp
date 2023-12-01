@@ -1,5 +1,5 @@
 import pyodbc
-from databaseConnection import dbStartConnection,dbCloseConnection, DBError
+from databaseConnection import DBServer, DBError
 import authenticate,contorllers
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtWidgets
@@ -8,24 +8,11 @@ from userInterface.login_page import Ui_Form
 
 # a boolean that defines whether the program should end or not 
 is_program_over = False
+databaseRef = None
 
 def main():
     try:
-        # connecting to the database
-        connection = dbStartConnection()
-
-        # making a cursor of db in order to executes queries
-        dbCursor = connection.cursor()
-
-        #Asking user for their user_id 
-        #user_id = input("Please Enter your user_id in order to login: \n")
-        #checking if the user_id is valid to login
-        # if not authenticate.login(user_id,dbCursor):
-        #     print("Not logged IN...")
-        #else: 
-        #    print("Logged In...")
-
-
+        databaseRef = DBServer()
         #setting up the login user interface 
         app = QApplication(sys.argv)
         Form = QtWidgets.QWidget()
@@ -46,8 +33,8 @@ def main():
         print(f"Error: {e}")
 
 
-def endProgram(connection: pyodbc.Connection):
-    dbCloseConnection(connection)
+def endProgram(databaseRef: DBServer):
+    databaseRef.dbCloseConnection()
 
 if (__name__ == '__main__'):
     main()

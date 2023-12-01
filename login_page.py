@@ -168,7 +168,7 @@ class Ui_Form(object):
         self.login_btn_container.setMinimumSize(QtCore.QSize(300, 50))
         self.login_btn_container.setMaximumSize(QtCore.QSize(300, 50))
         self.login_btn_container.setObjectName("login_btn_container")
-        self.login_button = QtWidgets.QPushButton(self.login_btn_container)
+        self.login_button = QtWidgets.QPushButton(self.login_btn_container,clicked= lambda: self.onLoginListner())
         self.login_button.setGeometry(QtCore.QRect(18, 2, 260, 31))
         font = QtGui.QFont()
         font.setPointSize(13)
@@ -179,6 +179,15 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+    def onLoginListner(self):
+        userId = self.login_input.text
+        #checking if the user_id is valid to login
+        '''if not authenticate.login(user_id,dbCursor):
+             self.label.setText("Invalid Credentials.")
+        else: 
+            self.label.setText("Logging In...")'''
+        
+
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
@@ -187,5 +196,7 @@ class Ui_Form(object):
         self.login_button.setText(_translate("Form", "LOG IN"))
 
 def onExitListner():
-    print("HIHI")
+    
     exit(0)
+
+

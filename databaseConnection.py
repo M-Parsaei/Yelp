@@ -6,43 +6,46 @@ class DBError(Exception):
     pass
 
 
-def dbStartConnection() -> pyodbc.Connection:
-    """
-    starts a connection to the sql database.
+class DBServer():
+    def __init__(self) -> None:
+        self.dbConnection = None
+        self.dbCursor= None
+        # connecting to the database
+        connection = self.dbStartConnection()
 
-    Returns:
-        pyodbc.Connection: A connection object to the database.
+    def dbStartConnection(self):
+        """
+        starts a connection to the sql database.
 
-    """
+        """
 
-    # loading the env file
-    load_dotenv()
+        # loading the env file
+        load_dotenv()
 
-    # getting the server name, password and user from environment file
-    server_name = os.getenv("server_name")
-    db_user = os.getenv("user_id")
-    db_password = os.getenv("db_password")
+        # getting the server name, password and user from environment file
+        server_name = os.getenv("server_name")
+        db_user = os.getenv("user_id")
+        db_password = os.getenv("db_password")
 
-    #connecting to db
-    try:
-        connection = pyodbc.connect('driver={SQL Server};'+f'server={server_name};\
-                            uid={db_user};pwd={db_password}')
-    except:
-        raise DBError("failed to start the connection to database")
-    
-    return connection
+        #connecting to db
+        try:
+            self.dbConnection = pyodbc.connect('driver={SQL Server};'+f'server={server_name};\
+                                uid={db_user};pwd={db_password}')
+            # making a cursor of db in order to executes queries
+            dbCursor = self.dbConnection.cursor()
+        except:
+            raise DBError("failed to start the connection to database")
+        
+    def hmm(self):
+        print("fuck")
 
+    def dbCloseConnection(self):
+        """
+        stops the connection to the database.
 
-def dbCloseConnection(connection: pyodbc.Connection):
-    """
-    stops the connection to the database.
-
-    Args:
-        connection (pyodbc.Connection): The pyodbc Connection to the db
-
-    """
-    try:
-        connection.close()
-        print("connection successfuly closed")
-    except:
-        raise DBError("failed to stop the connection from the database")
+        """
+        try:
+            self.dbConnection.close()
+            print("connection successfuly closed")
+        except:
+            raise DBError("failed to stop the connection from the database")
