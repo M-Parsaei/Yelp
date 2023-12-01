@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>exit.svg</file>
     <file>user.svg</file>
   </qresource>
 </RCC>
