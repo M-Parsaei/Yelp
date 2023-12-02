@@ -1,17 +1,27 @@
-import pyodbc
-from main import databaseRef,endProgram
+from colorama import Fore, Back, Style,init
 
 
+def askTask() -> str:
+    print("For using any of the feature, please type the corresponding number:")
+    print("1- Searching for business (type 1)")
+    print("2- Searching for users (type 2)")
+    print("3- Add a friend (type 3)")
+    print("4- Add a review for a business (type 4)")
+    return input("Please type the number of task you wish or type exit for quitting program: -> ")
 
-
-def askUserID():
+def askUserID() -> bool:
     is_user_logged_in = False
     while(not is_user_logged_in):
-        user_id = input("Please Enter your user_id to log in:")
+        user_id = input("Please Enter your user_id to log in: -> ")
         if(user_id == 'exit'):
-            endProgram()
-        is_user_logged_in = login(user_id)
-        print("Invalid Credential") if (not is_user_logged_in) else print("Logged In successfuly.") 
+            return False
+        is_user_logged_in = login(user_id.strip())
+        if (not is_user_logged_in):
+            print(Fore.RED + Back.LIGHTWHITE_EX + "Invalid Credential")  
+        else:
+            print(Fore.GREEN + Back.LIGHTWHITE_EX + "Logged In successfuly.")
+            return True
+
 
 def login(id: str) -> bool:
     """
@@ -25,6 +35,8 @@ def login(id: str) -> bool:
         id (str): The user ID
 
     """
+
+    from main import databaseRef
 
     check_user_valid_query = 'SELECT user_id\
                             FROM user_yelp AS U\

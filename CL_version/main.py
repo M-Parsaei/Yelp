@@ -1,10 +1,7 @@
-import pyodbc
 from databaseConnection import DBServer, DBError
-import authenticate,contorllers
 from colorama import just_fix_windows_console,Fore, Back, Style,init
+from authenticate import askUserID, askTask
 
-# a boolean that defines whether the program should end or not 
-is_program_over = False
 databaseRef = DBServer()
 
 just_fix_windows_console()
@@ -12,21 +9,31 @@ init(autoreset=True)
 
 def main():
     try:
-
+        # a boolean that defines whether the program should end or not 
+        is_program_over = False
 
         print(Back.WHITE + Fore.GREEN + "welcome to Yelp - command Line version")  
         print("For exiting the program, type exit in any stage of program")     
 
+        is_success_login = askUserID()
+        if (not is_success_login):
+            endProgram()
 
-        authenticate.askUserID()
-
-        print("For using any of the feature, please type the corresponding number:")
-        print("1- Searching for business (type 1)")
-        print("2- Searching for users (type 2)")
-        print("3- Add a friend (type 3)")
-        print("4- Add a review for a business (type 4)")
-        input("Please type the number of task you wish or type exit for quitting program: ")
-
+        while(not is_program_over):
+            user_input = askTask().strip()
+            if(user_input=="exit"):
+                is_program_over = True
+                endProgram()
+            elif (user_input=="1"):
+                print("TASK 1")
+            elif (user_input=="2"):
+                print("TASK 2")
+            elif (user_input=="3"):
+                print("TASK 3")
+            elif (user_input=="4"):
+                print("TASK 4")
+            else:
+                print("Invalid task number, please try again")
         '''result = contorllers.searchTable(filter={"name":"john"},
                                    tableName="user_yelp",
                                    cursor=dbCursor)
@@ -39,7 +46,7 @@ def main():
 
 def endProgram():
     databaseRef.dbCloseConnection()
-    print("User exited the program")
+    print(Fore.GREEN + "User exited the program")
     exit(0)
 
 if (__name__ == '__main__'):
