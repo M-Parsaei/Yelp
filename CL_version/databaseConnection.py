@@ -23,6 +23,9 @@ class DBServer():
         db_user = os.getenv("user_id")
         db_password = os.getenv("db_password")
 
+
+        self.logged_in_id = ""
+
         #connecting to db
         try:
             self.dbConnection = pyodbc.connect('driver={SQL Server};'+f'server={server_name};\
@@ -117,7 +120,24 @@ class DBServer():
             # as they are not allowed to login
             return False
         #otherwise the user_id was in database, so return true to approve login
+        self.logged_in_id = id
         return True
+    
+    def makeFriend(self,friend_id: str) -> bool:
+        friend_id = friend_id.strip()
+
+        adding_friend_query = "INSERT INTO friendship(user_id,friend) VALUES (?,?)"
+        
+        try:
+            result = self.dbCursor.execute(adding_friend_query,[self.logged_in_id,friend_id])
+        except pyodbc.DatabaseError as err:
+            print("Can't add this person as your friend.")
+            self.dbConnection.rollback()
+        else:
+            print("friend added successfully!")
+            self.dbConnection.commit()
+        
+        
     
     def dbCloseConnection(self):
         """

@@ -56,8 +56,14 @@ def searchUsers(databaseRef: DBServer):
     else:
         print("There are no users matching your filters.")
 
-def addFriend():
-    pass
+def addFriend(databaseRef: DBServer):
+    print("Please type the id of person you want to add as friend")
+    print("Or type cancel to quit Adding friend task")
+    user_id = input("friend user id -> ")
+    if user_id=="cancel":
+        return 
+    else:
+        databaseRef.makeFriend(friend_id=user_id)
 
 def addReview():
     pass

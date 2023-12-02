@@ -1,10 +1,9 @@
 from databaseConnection import DBServer, DBError
-from colorama import just_fix_windows_console,Fore, Back, Style,init
+from colorama import just_fix_windows_console,Fore, Back,init
 from authenticate import askUserID, askTask
-from helpers import searchBusiness,searchUsers
+from helpers import searchBusiness,searchUsers,addFriend
 
 databaseRef = DBServer()
-
 just_fix_windows_console()
 init(autoreset=True)
 
@@ -34,7 +33,7 @@ def main():
             elif (user_input=="2"):
                 searchUsers(databaseRef)
             elif (user_input=="3"):
-                print("TASK 3")
+                addFriend(databaseRef)
             elif (user_input=="4"):
                 print("TASK 4")
             else:
