@@ -1,5 +1,17 @@
 import pyodbc
-from main import databaseRef
+from main import databaseRef,endProgram
+
+
+
+
+def askUserID():
+    is_user_logged_in = False
+    while(not is_user_logged_in):
+        user_id = input("Please Enter your user_id to log in:")
+        if(user_id == 'exit'):
+            endProgram()
+        is_user_logged_in = login(user_id)
+        print("Invalid Credential") if (not is_user_logged_in) else print("Logged In successfuly.") 
 
 def login(id: str) -> bool:
     """
