@@ -26,12 +26,35 @@ def searchBusiness(databaseRef: DBServer):
 
     result = databaseRef.searchTable(filter=filterDict,tableName="business")
     print("result is : \n ")
-    for item in result:
-        print(item)
+    if result:
+        for item in result:
+            print(item)
+    else:
+        print("There are no business matching your filters.")
 
 
-def searchUsers():
-    pass
+def searchUsers(databaseRef: DBServer):
+    print("Please enters the filters,\n"
+           "if you don't want to filter users by any of the following option, type N/A for that option")
+    filterDict={}
+
+    name = input("name of user: -> ")
+    minStar = input("Minimum average stars: -> ")
+    minCount = input("Minimum review counts: -> ")
+
+    if minStar.lower() != "n/a" :
+        filterDict["average_stars"] = float(minStar)
+    if minCount.lower() != "n/a" :
+        filterDict["review_count"] = int(minCount)
+    if name.lower() != "n/a" :
+        filterDict["name"] = name
+
+    result = databaseRef.searchTable(filter=filterDict,tableName="user_yelp")
+    if result:
+        for item in result:
+            print(item)
+    else:
+        print("There are no users matching your filters.")
 
 def addFriend():
     pass

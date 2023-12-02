@@ -1,7 +1,7 @@
 from databaseConnection import DBServer, DBError
 from colorama import just_fix_windows_console,Fore, Back, Style,init
 from authenticate import askUserID, askTask
-from helpers import searchBusiness
+from helpers import searchBusiness,searchUsers
 
 databaseRef = DBServer()
 
@@ -32,13 +32,15 @@ def main():
             elif (user_input=="1"):
                 searchBusiness(databaseRef)
             elif (user_input=="2"):
-                print("TASK 2")
+                searchUsers(databaseRef)
             elif (user_input=="3"):
                 print("TASK 3")
             elif (user_input=="4"):
                 print("TASK 4")
             else:
                 print("Invalid task number, please try again")
+
+        endProgram()
 
     
     except DBError as e:

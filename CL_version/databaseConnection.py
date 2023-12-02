@@ -71,7 +71,7 @@ class DBServer():
             # add ? as the value because we will add the value 
             # in the queryParams instead and pass this list
             # to cursor.execute 
-            if key != "stars":
+            if key not in ("stars", "average_stars","review_count"):
                 query = query + f"{key} = ?"
             else:
                 query = query + f"{key} >= ?"
