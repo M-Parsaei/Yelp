@@ -1,6 +1,8 @@
 from databaseConnection import DBServer, DBError
 from colorama import just_fix_windows_console,Fore, Back, Style,init
 from authenticate import askUserID, askTask
+from helpers import searchBusiness
+import contorllers
 
 databaseRef = DBServer()
 
@@ -25,7 +27,7 @@ def main():
                 is_program_over = True
                 endProgram()
             elif (user_input=="1"):
-                print("TASK 1")
+                searchBusiness()
             elif (user_input=="2"):
                 print("TASK 2")
             elif (user_input=="3"):
@@ -34,12 +36,8 @@ def main():
                 print("TASK 4")
             else:
                 print("Invalid task number, please try again")
-        '''result = contorllers.searchTable(filter={"name":"john"},
-                                   tableName="user_yelp",
-                                   cursor=dbCursor)
 
-        print(result)'''
-
+    
     except DBError as e:
         print(f"Error: {e}")
 

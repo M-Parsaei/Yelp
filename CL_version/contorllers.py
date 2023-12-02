@@ -1,8 +1,7 @@
 import pyodbc
 import queriesSkelton
 
-def searchTable(filter: dict, tableName: str,
-                   cursor: pyodbc.Cursor)-> list:
+def searchTable(filter: dict, tableName: str,)-> list:
     """
     returns the list of tuples in a table which 
     matches the searching filter
@@ -11,16 +10,15 @@ def searchTable(filter: dict, tableName: str,
         list: list of tuples
 
     Args:
-        filter (dict): The filtering dictionary, for example {"name":"KFC","star":5} 
+        filter (dict): The filtering dictionary, for example {"name":"KFC","stars":5} 
         if wants to filter only business with KFC as their name and have 5 star rating
 
         tableName (str): the name of the table which searchTable runs the query on
 
-        cursor (pyodbc.Cursor): The pyodbc Cursor in order to execute a query
-        to find all of the matching business from the table
     """
 
-    
+    print("the filtering is ")
+    print(filter)
     try:
         # getting the skelton of the search query 
         # for a table which its name was provided from tableName,
@@ -54,8 +52,9 @@ def searchTable(filter: dict, tableName: str,
     # finishs the query with ;
     query = query + " ;"
 
+    from main import databaseRef
     #executes the query and fetch all matching records as a list
-    result = cursor.execute(query,queryParams).fetchall()
+    result = databaseRef.dbCursor.execute(query,queryParams).fetchall()
 
     return result
 

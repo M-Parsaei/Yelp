@@ -42,6 +42,7 @@ def login(id: str) -> bool:
                             FROM user_yelp AS U\
                             WHERE U.user_id = ?'
     
+    
     result = databaseRef.dbCursor.execute(check_user_valid_query,[id]).fetchone()
     if result is None:
         # there is no such user_id in database, return false
