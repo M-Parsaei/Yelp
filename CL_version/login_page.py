@@ -9,8 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import userInterface.login_page_res
-
+import login_page_res
+import authenticate
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -180,12 +180,12 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def onLoginListner(self):
-        userId = self.login_input.text
+        userId = self.login_input.text()
         #checking if the user_id is valid to login
-        '''if not authenticate.login(user_id,dbCursor):
+        if not authenticate.login(userId):
              self.label.setText("Invalid Credentials.")
         else: 
-            self.label.setText("Logging In...")'''
+            self.label.setText("Logging In...")
         
 
     def retranslateUi(self, Form):
@@ -196,7 +196,6 @@ class Ui_Form(object):
         self.login_button.setText(_translate("Form", "LOG IN"))
 
 def onExitListner():
-    
     exit(0)
 
 

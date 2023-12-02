@@ -7,13 +7,8 @@ class DBError(Exception):
 
 
 class DBServer():
-    def __init__(self) -> None:
-        self.dbConnection = None
-        self.dbCursor= None
-        # connecting to the database
-        connection = self.dbStartConnection()
 
-    def dbStartConnection(self):
+    def __init__(self):
         """
         starts a connection to the sql database.
 
@@ -32,7 +27,7 @@ class DBServer():
             self.dbConnection = pyodbc.connect('driver={SQL Server};'+f'server={server_name};\
                                 uid={db_user};pwd={db_password}')
             # making a cursor of db in order to executes queries
-            dbCursor = self.dbConnection.cursor()
+            self.dbCursor = self.dbConnection.cursor()
         except:
             raise DBError("failed to start the connection to database")
         

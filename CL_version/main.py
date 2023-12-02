@@ -4,15 +4,14 @@ import authenticate,contorllers
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtWidgets
 import sys
-from userInterface.login_page import Ui_Form
+from login_page import Ui_Form
 
 # a boolean that defines whether the program should end or not 
 is_program_over = False
-databaseRef = None
+databaseRef = DBServer()
 
 def main():
     try:
-        databaseRef = DBServer()
         #setting up the login user interface 
         app = QApplication(sys.argv)
         Form = QtWidgets.QWidget()
