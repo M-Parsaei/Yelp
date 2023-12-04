@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import pyodbc
 import queriesSkelton
+from colorama import Fore, Back, Style,init
+
 
 class DBError(Exception):
     pass
@@ -131,7 +133,8 @@ class DBServer():
         try:
             result = self.dbCursor.execute(adding_friend_query,[self.logged_in_id,friend_id])
         except pyodbc.DatabaseError as err:
-            print("Can't add this person as your friend.")
+            print(Fore.RED + "Can't add this person as your friend.")
+            print(Fore.RED + "Probably they are already your friend or an invalid friend id")
             self.dbConnection.rollback()
         else:
             print("friend added successfully!")

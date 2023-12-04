@@ -49,14 +49,14 @@ def searchBusiness(databaseRef: DBServer):
         if (order == 1):
             result = sorted(result, key=lambda x: x[5])
         elif (order == 2):
-            result = sorted(result, key=lambda x: x[3])
+            result = sorted(result, key=lambda x: x[3].lower())
         else:
-            result = sorted(result, key=lambda x: x[1])
+            result = sorted(result, key=lambda x: x[1].lower())
 
         index = 1
         for item in result:
-            print(Fore.GREEN + f"{index}-")
-            print(f"\n\t Business ID: {item[0]} \n\t Name: {item[1]}"
+            print(Fore.GREEN + f"{index}------------------------")
+            print(f"\t Business ID: {item[0]} \n\t Name: {item[1]}"
                 f"\n\t Address: {item[2]} \n\t City: {item[3]} \n\t Rating(# of stars): {item[5]} \n")
             index += 1
     else:
@@ -108,11 +108,11 @@ def searchUsers(databaseRef: DBServer):
 
     if result:
         # sorting the list of records by their name attributes
-        result = sorted(result, key=lambda x: x[1])
+        result = sorted(result, key=lambda x: x[1].lower())
         index = 1
         for item in result:
-            print(Fore.GREEN + f"{index}-")
-            print(f"\n\t User ID: {item[0]} \n\t Name: {item[1]}"
+            print(Fore.GREEN + f"{index}------------------------")
+            print(f"\t User ID: {item[0]} \n\t Name: {item[1]}"
                 f"\n\t Review Count: {item[2]} \n\t Useful: {item[4]} \n\t Funny: {item[5]}"
                 f"\n\t Cool: {item[6]} \n\t Average Star: {item[8]} \n\t register date: {item[3]}")
             index += 1
@@ -120,6 +120,7 @@ def searchUsers(databaseRef: DBServer):
         print(Fore.RED +"There are no users matching your filters.")
 
 def addFriend(databaseRef: DBServer):
+    print("*************************************************\n")
     print("Please type the id of person you want to add as friend")
     print("Or type cancel to quit Adding friend task")
     user_id = input("friend user id -> ")
@@ -127,6 +128,8 @@ def addFriend(databaseRef: DBServer):
         return 
     else:
         databaseRef.makeFriend(friend_id=user_id)
+
+    print("*************************************************\n")
 
 def addReview():
     pass
