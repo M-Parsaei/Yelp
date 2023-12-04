@@ -21,16 +21,31 @@ def searchBusiness(databaseRef: DBServer):
           "type 1 to order by stars\n"
           "type 2 to order by city \n"
           "type 3 to order by name \n")
-    order = input("order by: -> ")
+    order = int(input("order by: -> "))
 
 
     result = databaseRef.searchTable(filter=filterDict,tableName="business")
+    print("*************************************************\n")
     print("result is : \n ")
+
     if result:
+        if (order == 1):
+            # TODO to fix the star sorting
+            result = sorted(result, key=lambda x: x[5])
+        elif (order == 2):
+            result = sorted(result, key=lambda x: x[3])
+        else:
+            result = sorted(result, key=lambda x: x[1])
+
+        index = 1
         for item in result:
-            print(item)
+            print(f"{index}- \n\t Business ID: {item[0]} \n\t Name: {item[1]}"
+                f"\n\t Address: {item[2]} \n\t City: {item[3]} \n\t Rating(# of stars): {item[5]} \n")
+            index += 1
     else:
         print("There are no business matching your filters.")
+
+    print("*************************************************\n")
 
 
 def searchUsers(databaseRef: DBServer):
@@ -50,6 +65,7 @@ def searchUsers(databaseRef: DBServer):
         filterDict["name"] = name
 
     result = databaseRef.searchTable(filter=filterDict,tableName="user_yelp")
+
     if result:
         for item in result:
             print(item)
