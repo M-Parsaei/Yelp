@@ -131,13 +131,19 @@ class DBServer():
         adding_friend_query = "INSERT INTO friendship(user_id,friend) VALUES (?,?)"
         
         try:
+            if (self.logged_in_id == friend_id):
+                # they can't add themselves as friend of themselves
+                raise NameError
             result = self.dbCursor.execute(adding_friend_query,[self.logged_in_id,friend_id])
         except pyodbc.DatabaseError as err:
             print(Fore.RED + "Can't add this person as your friend.")
             print(Fore.RED + "Probably they are already your friend or an invalid friend id")
             self.dbConnection.rollback()
+        except NameError as err:
+            print(Fore.RED + "you can't add yourself as your friend... pathetic")
+            self.dbConnection.rollback()
         else:
-            print("friend added successfully!")
+            print(Fore.GREEN + "friend added successfully!")
             self.dbConnection.commit()
         
         

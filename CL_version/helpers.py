@@ -128,7 +128,6 @@ def addFriend(databaseRef: DBServer):
         return 
     else:
         databaseRef.makeFriend(friend_id=user_id)
-
     print("*************************************************\n")
 
 def addReview():
