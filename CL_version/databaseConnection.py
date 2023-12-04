@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import pyodbc
 import queriesSkelton
 from colorama import Fore, Back, Style,init
+from datetime import datetime
 
 
 class DBError(Exception):
@@ -147,7 +148,25 @@ class DBServer():
             self.dbConnection.commit()
         
         
-    
+    def makeReview(self,business_id,review_star):
+
+        adding_review_query = "INSERT INTO review(review_id,user_id,business_id,stars) VALUES (?,?,?,?)"
+        
+        try:
+            current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+            review_id = f"{current_time}_{self.logged_in_id}"
+            review_id = review_id[:22]
+            result = self.dbCursor.execute(adding_review_query,[review_id,self.logged_in_id,business_id,review_star])
+        except pyodbc.DatabaseError as err:
+            print(err)
+            print(Fore.RED + "Can't add this review.")
+            print(Fore.RED + "Probably Invalid business id or rating... Try again")
+            self.dbConnection.rollback()
+        else:
+            print(Fore.GREEN + "review added successfully!")
+            self.dbConnection.commit()
+
+
     def dbCloseConnection(self):
         """
         stops the connection to the database.

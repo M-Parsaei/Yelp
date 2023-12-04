@@ -130,5 +130,20 @@ def addFriend(databaseRef: DBServer):
         databaseRef.makeFriend(friend_id=user_id)
     print("*************************************************\n")
 
-def addReview():
-    pass
+def addReview(databaseRef: DBServer):
+    print("*************************************************\n")
+    print("Please type the id of business you want to give a review")
+    print("Or type cancel to quit Adding a review")
+    business_id = input("Business user id -> ")
+    if business_id=="cancel":
+        return 
+    try:
+        review_star = int(input("Please enter your star (ant Integer between 1 to 5) -> "))
+        while(review_star < 1 or review_star > 5):
+            print(Fore.RED + "Invalid rating. Review Star should be between 1 to 5.")
+            review_star = int(input("Please enter your star (ant Integer between 1 to 5) -> "))
+    except ValueError:
+        print(Fore.RED + "Invalid review star, it should be integer")
+    else:
+        databaseRef.makeReview(business_id=business_id,review_star=review_star)
+    print("*************************************************\n")
